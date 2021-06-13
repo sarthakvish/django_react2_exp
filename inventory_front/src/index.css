@@ -19,3 +19,8 @@ h3{
 .rating span{
     margin: 0.1rem;
 }
+
+.btn {
+    position: relative;
+    top: 1rem;
+}
