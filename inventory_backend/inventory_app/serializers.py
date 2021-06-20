@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Product, OrderItem, Order
+from .models import Product, OrderItem, Order, ShippingAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
@@ -46,7 +46,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = ShippingAddress
         fields = '__all__'
 
 
@@ -57,7 +57,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    orders = serializers.SerializerMethodField(read_only=True)
+    orderItems = serializers.SerializerMethodField(read_only=True)
     shippingAddress = serializers.SerializerMethodField(read_only=True)
     user = serializers.SerializerMethodField(read_only=True)
 
@@ -65,10 +65,11 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
 
-    def get_orders(self, obj):
+    def get_orderItems(self, obj):
         items = obj.orderitem_set.all()
         serializer = OrderItemSerializer(items, many=True)
         return serializer.data
+
 
     # object is order model, hum order us perticular order se related jitne
     # orderitme hai unhe get karke serialize kr rhe, since field is one to many between order item and order
@@ -76,7 +77,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def get_shippingAddress(self, obj):
         try:
-            address = ShippingAddressSerializer(obj.shippingAddress, many=False)
+            address = ShippingAddressSerializer(obj.shippingaddress, many=False).data
             return address
 
         except:
