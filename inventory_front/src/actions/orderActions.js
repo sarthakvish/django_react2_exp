@@ -6,6 +6,8 @@ import { ORDER_CREATE_FAIL,
 
     ORDER_PAY_FAIL,ORDER_PAY_REQUEST,ORDER_PAY_RESET,ORDER_PAY_SUCCESS,
 
+    ORDER_LIST_MY_REQUEST, ORDER_LIST_MY_SUCCESS, ORDER_LIST_MY_FAIL, ORDER_LIST_MY_RESET,
+
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -120,6 +122,42 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
     }catch (error){
         dispatch({
             type: ORDER_PAY_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail : error.message,
+        })
+    }
+}
+
+
+export const listMyOrders = () => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:ORDER_LIST_MY_REQUEST,
+        })
+        // we still need user to be login
+        const {userLogin:{userInfo}} = getState()
+
+        const config = {
+            headers:{
+                'Content-type':'application/json',
+                Authorization: `Bearer ${userInfo.token}` /*we are taking logged in user token and sending*/
+
+            }
+        }
+
+        const {data}=await axios.get(`http://localhost:3000/api/orders/myorders/`,
+            config)
+
+        dispatch({
+            type:ORDER_LIST_MY_SUCCESS,
+            payload:data
+        })
+
+
+
+    }catch (error){
+        dispatch({
+            type: ORDER_LIST_MY_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail : error.message,
         })

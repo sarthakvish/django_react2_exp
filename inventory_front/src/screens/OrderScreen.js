@@ -69,7 +69,7 @@ function OrderScreen({match}) {
             <Row>
                 <Col md={8}>
                     <ListGroup variant='flush'>
-                        <ListGroupItem>
+                        <ListGroup.Item>
                             <h2>Shipping</h2>
                             <p><strong>Name:</strong>{order.user.name}</p>
                             <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
@@ -84,9 +84,9 @@ function OrderScreen({match}) {
 
                             {order.isDelivered ? (<Message varient='success'>Delivered on {order.deliveredAt}</Message>)
                                 : (<Message varient='warning'>Not Delivered</Message>)}
-                        </ListGroupItem>
+                        </ListGroup.Item>
 
-                        <ListGroupItem>
+                        <ListGroup.Item>
                             <h2>Payment Method</h2>
                             <p>
                                 <strong>Method:</strong>
@@ -94,9 +94,9 @@ function OrderScreen({match}) {
                             </p>
                             {order.isPaid ? (<Message varient='success'>Paid on {order.paidAt}</Message>)
                             : (<Message varient='warning'>Not Paid</Message>)}
-                        </ListGroupItem>
+                        </ListGroup.Item>
 
-                        <ListGroupItem>
+                        <ListGroup.Item>
                             <h2>Order Items</h2>
                             {order.orderItems.length===0 ? <Message varient='info'>
                                 Order is empty
@@ -124,44 +124,44 @@ function OrderScreen({match}) {
 
                                 </ListGroup>
                             )}
-                        </ListGroupItem>
+                        </ListGroup.Item>
                     </ListGroup>
                 </Col>
 
                 <Col md={4}>
                     <Card>
                         <ListGroup variant='flush'>
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <h2>Order Summary</h2>
-                            </ListGroupItem>
+                            </ListGroup.Item>
 
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Item:</Col>
                                     <Col>Rs{order.itemsPrice}</Col>
                                 </Row>
-                            </ListGroupItem>
+                            </ListGroup.Item>
 
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping:</Col>
                                     <Col>Rs{order.shippingPrice}</Col>
                                 </Row>
-                            </ListGroupItem>
+                            </ListGroup.Item>
 
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Tax:</Col>
                                     <Col>Rs{order.taxPrice}</Col>
                                 </Row>
-                            </ListGroupItem>
+                            </ListGroup.Item>
 
-                            <ListGroupItem>
+                            <ListGroup.Item>
                                 <Row>
                                     <Col>Total:</Col>
                                     <Col>Rs{order.totalPrice}</Col>
                                 </Row>
-                            </ListGroupItem>
+                            </ListGroup.Item>
 
                             {!order.isPaid && (
                                 <ListGroup.Item>
