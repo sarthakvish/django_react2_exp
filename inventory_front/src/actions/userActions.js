@@ -17,6 +17,9 @@ import {
 
     USER_DELETE_REQUEST, USER_DELETE_FAIL,
     USER_DELETE_SUCCESS,
+
+    USER_UPDATE_REQUEST, USER_UPDATE_FAIL,
+    USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
 
 import axios from "axios";
@@ -255,3 +258,43 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     }
 }
 
+
+export const updateUser = (user) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:USER_UPDATE_REQUEST,
+        })
+        // we still need user to be login when update
+        const {userLogin:{userInfo}} = getState()
+
+        const config = {
+            headers:{
+                'Content-type':'application/json',
+                Authorization: `Bearer ${userInfo.token}` /*we are taking logged in user token and sending*/
+
+            }
+        }
+
+        const {data}=await axios.put(`http://localhost:3000/api/users/update/${user._id}`,
+            user,
+            config)
+
+        dispatch({
+            type:USER_UPDATE_SUCCESS,
+        })
+
+        dispatch({
+            type:USER_DETAILS_SUCCESS,
+            payload:data,
+        })
+
+
+
+    }catch (error){
+        dispatch({
+            type: USER_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail : error.message,
+        })
+    }
+}

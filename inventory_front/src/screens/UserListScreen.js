@@ -31,7 +31,7 @@ function UserListScreen({history}) {
             history.push('/login')
         }
 
-    },[dispatch, history, successDelete])
+    },[dispatch, history, successDelete, userInfo])
     return (
         <div>
             <h1>Users</h1>

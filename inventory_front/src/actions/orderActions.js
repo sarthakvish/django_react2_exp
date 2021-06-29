@@ -8,6 +8,10 @@ import { ORDER_CREATE_FAIL,
 
     ORDER_LIST_MY_REQUEST, ORDER_LIST_MY_SUCCESS, ORDER_LIST_MY_FAIL, ORDER_LIST_MY_RESET,
 
+    ORDER_LIST_REQUEST, ORDER_LIST_SUCCESS, ORDER_LIST_FAIL,
+
+    ORDER_DELIVER_FAIL,ORDER_DELIVER_REQUEST,ORDER_DELIVER_RESET,ORDER_DELIVER_SUCCESS,
+
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -129,6 +133,46 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 }
 
 
+
+export const deliverOrder = (order) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:ORDER_DELIVER_REQUEST,
+        })
+        // we still need user to be login
+        const {userLogin:{userInfo}} = getState()
+
+        const config = {
+            headers:{
+                'Content-type':'application/json',
+                Authorization: `Bearer ${userInfo.token}` /*we are taking logged in user token and sending*/
+
+            }
+        }
+
+        const {data}=await axios.put(`http://localhost:3000/api/orders/${order._id}/deliver/`,
+            {},
+            config)
+
+        dispatch({
+            type:ORDER_DELIVER_SUCCESS,
+            payload:data
+        })
+
+
+
+    }catch (error){
+        dispatch({
+            type: ORDER_DELIVER_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail : error.message,
+        })
+    }
+}
+
+
+
+
 export const listMyOrders = () => async (dispatch, getState) => {
     try{
         dispatch({
@@ -158,6 +202,42 @@ export const listMyOrders = () => async (dispatch, getState) => {
     }catch (error){
         dispatch({
             type: ORDER_LIST_MY_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail : error.message,
+        })
+    }
+}
+
+
+export const listOrders = () => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type:ORDER_LIST_REQUEST,
+        })
+        // we still need user to be login
+        const {userLogin:{userInfo}} = getState()
+
+        const config = {
+            headers:{
+                'Content-type':'application/json',
+                Authorization: `Bearer ${userInfo.token}` /*we are taking logged in user token and sending*/
+
+            }
+        }
+
+        const {data}=await axios.get(`http://localhost:3000/api/orders/`,
+            config)
+
+        dispatch({
+            type:ORDER_LIST_SUCCESS,
+            payload:data
+        })
+
+
+
+    }catch (error){
+        dispatch({
+            type: ORDER_LIST_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail : error.message,
         })

@@ -42,7 +42,8 @@ function ProfileScreen({history}) {
             history.push('/login')
         }else {
             // checking if user detail or data is already loaded or not in page, if  not then get this.
-            if (!userInfo || !user.name || success){
+            if (!userInfo || !user.name || success || userInfo._id !== user.id){
+                // 4th if condn for ki user edit screen k data user profile update k sath match na kr jaye isliye.
                 dispatch({type:USER_UPDATE_PROFILE_RESET})
                 dispatch(getUserDetails('profile'))
                 dispatch(listMyOrders())
