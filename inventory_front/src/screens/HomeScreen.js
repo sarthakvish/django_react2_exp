@@ -7,9 +7,11 @@ import Product from "../components/Product";
 import {Row, Col} from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 
-function HomeScreen(props) {
+function HomeScreen({history}) {
     // const [products, setProducts] = useState([])
     // useEffect(()=>{
     //     async function fetchProducts(){
@@ -24,13 +26,16 @@ function HomeScreen(props) {
     // WE ARE TRIGGER ACTION FUNCTION BY USER EFFECT IN REDUX.
     const dispatch = useDispatch()
     const productList = useSelector(state => state.productList)
-    const {error, loading, products} = productList
+    const {error, loading, products, page, pages} = productList
+
+    let keyword = history.location.search
     useEffect(()=>{
-        dispatch(listProducts())
-    },[dispatch])
+        dispatch(listProducts(keyword))
+    },[dispatch, keyword])
 
     return (
         <div>
+            {!keyword && <ProductCarousel/>}
             <h1>Latest Product</h1>
             {loading ? <Loader/>
                 : error ? <Message varient='danger'>{error}</Message>
@@ -43,6 +48,7 @@ function HomeScreen(props) {
                                 </Col>
                             ))}
                         </Row>
+                        <Paginate page={page} pages={pages} keyword={keyword}/>
                     </div>
 
             }
