@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import status
 
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -106,3 +107,5 @@ def registerUser(request):
     except:
         message = {'detail': 'User with this email is already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+

@@ -18,6 +18,7 @@ class Product(models.Model):
     price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
     countInStock = models.IntegerField(null=True, blank=True, default=0)
+    reorder_level = models.IntegerField(default=0, blank=True, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
 
@@ -86,3 +87,4 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return str(self.address)
+
