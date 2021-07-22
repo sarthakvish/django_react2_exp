@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from twilio.rest import Client
 # Create your models here.
 
 
@@ -21,6 +21,28 @@ class Product(models.Model):
     reorder_level = models.IntegerField(default=0, blank=True, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
+
+
+    def save(self, *args, **kwargs):
+        try:
+            if int(self.countInStock) < self.reorder_level:
+                account_sid = "ACc36e9e5284dd30dd5af3052730234465"
+                auth_token = "a633c302dc09a0eaf20aaecc405f2bcf"
+                client = Client(account_sid, auth_token)
+                to_list = ['+919039724783']
+                for num in to_list:
+                    message = client.messages \
+                        .create(
+                        body=f'STOCK ALERT- Product {self.name} is about to finish from stock',
+                        from_='+12084490932',
+                        to=num
+                    )
+
+                    print(message.sid)
+        except:
+            pass
+
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

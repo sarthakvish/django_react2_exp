@@ -17,7 +17,7 @@ def getProducts(request):
     # products = Product.objects.all()
     products = Product.objects.filter(name__icontains=query)
     page = request.query_params.get('page')
-    paginator = Paginator(products, 2)
+    paginator = Paginator(products, 4)
     try:
         products = paginator.page(page)
 
@@ -42,7 +42,11 @@ def getTopProducts(request):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
 
-
+@api_view(['GET'])
+def stock(request):
+    products = Product.objects.all()
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getProduct(request, pk):
@@ -77,6 +81,7 @@ def updateProduct(request, pk):
     product.price = data['price']
     product.brand = data['brand']
     product.countInStock = data['countInStock']
+    product.reorder_level = data['reorderLevel']
     product.category = data['category']
     product.description = data['description']
     product.save()

@@ -19,6 +19,7 @@ function ProductEditScreen({match, history}) {
     const [brand, setBrand] = useState('')
     const [category, setCategory] = useState('')
     const [countInStock, setCountInStock] = useState(0)
+    const [reorderLevel, setReorderLevel] = useState(0)
     const [description, setDescription] = useState('')
     const [uploading, setUploading] = useState(false)
 
@@ -62,10 +63,11 @@ function ProductEditScreen({match, history}) {
 
 
     useEffect(()=>{
+        console.log(product.reorder_level)
 
         if(successUpdate){
             dispatch({type:PRODUCT_UPDATE_RESET})
-            history.push('/admin/productlist')
+            history.push('/admin/stocklist')
         } else{
             if (!product.name || product._id !== Number(productId)) {
                 dispatch(listProductDetails(productId))
@@ -76,6 +78,7 @@ function ProductEditScreen({match, history}) {
                 setBrand(product.brand)
                 setCategory(product.category)
                 setCountInStock(product.countInStock)
+                setReorderLevel(product.reorder_level)
                 setDescription(product.description)
 
             }
@@ -95,6 +98,7 @@ function ProductEditScreen({match, history}) {
             brand,
             category,
             countInStock,
+            reorderLevel,
             description
         }))
 
@@ -102,7 +106,7 @@ function ProductEditScreen({match, history}) {
     }
     return (
         <div>
-            <Link to='/admin/productlist'>
+            <Link to='/admin/stocklist'>
                 Go Back
             </Link>
 
@@ -185,6 +189,18 @@ function ProductEditScreen({match, history}) {
                                     placeholder='Enter stock'
                                     value={countInStock}
                                     onChange={(e) => setCountInStock(e.target.value)}
+                                >
+                                </Form.Control>
+                            </Form.Group>
+
+                            <Form.Group controlId='reorderlevel'>
+                                <Form.Label>Reorder Level</Form.Label>
+                                <Form.Control
+
+                                    type='number'
+                                    placeholder='Enter reorder level'
+                                    value={reorderLevel}
+                                    onChange={(e) => setReorderLevel(e.target.value)}
                                 >
                                 </Form.Control>
                             </Form.Group>
