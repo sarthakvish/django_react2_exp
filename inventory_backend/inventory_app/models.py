@@ -61,6 +61,7 @@ class Review(models.Model):
         return str(self.rating)
 
 
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     paymentMethod = models.CharField(max_length=200, null=True, blank=True)
