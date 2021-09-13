@@ -5,6 +5,7 @@ import {LinkContainer} from "react-router-bootstrap";
 import {logout} from "../actions/userActions";
 import SearchBox from "./SearchBox";
 
+
 function Header() {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
@@ -14,13 +15,13 @@ function Header() {
     const logoutHandler = () => {
         dispatch(logout())
     }
-
+    const navbar = {backgroundColor: '#8a2b06'};
     return (
         <header>
-                <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+                <Navbar style={navbar} collapseOnSelect>
                     <Container>
                         <LinkContainer to='/'>
-                            <Navbar.Brand>Kolentry</Navbar.Brand>
+                            <Navbar.Brand >Do ऑनलाइन बिजनेस  </Navbar.Brand>
                         </LinkContainer>
 
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -10,11 +10,14 @@ from django.core.paginator import Paginator, EmptyPage, Page, PageNotAnInteger
 
 
 @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
 def getProducts(request):
     query = request.query_params.get('keyword')
     if query == None:
         query = ''
     # products = Product.objects.all()
+    # user=request.user
+    # products = user.product_set.all()
     products = Product.objects.filter(name__icontains=query)
     page = request.query_params.get('page')
     paginator = Paginator(products, 4)

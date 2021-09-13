@@ -14,18 +14,16 @@ import {PRODUCT_LIST_FAIL,
     PRODUCT_CREATE_FAIL,
     PRODUCT_CREATE_REQUEST,
     PRODUCT_CREATE_SUCCESS,
-    PRODUCT_CREATE_RESET,
 
     PRODUCT_UPDATE_FAIL,
     PRODUCT_UPDATE_REQUEST,
     PRODUCT_UPDATE_SUCCESS,
-    PRODUCT_UPDATE_RESET,
 
 
     PRODUCT_CREATE_REVIEW_FAIL,
     PRODUCT_CREATE_REVIEW_REQUEST,
     PRODUCT_CREATE_REVIEW_SUCCESS,
-    PRODUCT_CREATE_REVIEW_RESET,
+
 
 
     PRODUCT_TOP_FAIL,
@@ -34,7 +32,6 @@ import {PRODUCT_LIST_FAIL,
     from "../constants/productConstants";
 
 import axios from "axios";
-import {ORDER_LIST_MY_FAIL, ORDER_LIST_MY_REQUEST, ORDER_LIST_MY_SUCCESS} from "../constants/orderConstants";
 
 export const listProducts = (keyword = '') => async (dispatch) => {
     try{
