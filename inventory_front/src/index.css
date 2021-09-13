@@ -58,3 +58,11 @@ h3{
         font-size: 2.5vw;
     }
 }
+.navbar-light .navbar-brand {
+    color: white !important;
+}
+.nav-link{
+    font-family: 'Roboto', sans-serif;
+    color: white !important;
+}
+

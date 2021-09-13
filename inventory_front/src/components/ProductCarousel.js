@@ -18,7 +18,7 @@ function ProductCarousel(props) {
     return ( loading ? <Loader/>
     :error ? <Message varient='danger'>{error}</Message>
                 :(
-                    <Carousel pause='hover' className='bg-dark'>
+                    <Carousel pause='hover' className='bg-dark' >
                         {products.map(product=>(
                             <Carousel.Item key={product._id}>
                                 <Link to={`/product/${product._id}`}>
